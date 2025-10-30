@@ -6,7 +6,6 @@
     <title>i-collect — Redessinons Dakar</title>
     <link rel="icon" href="./images/logoi-collect.png">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
         
         * {
@@ -20,46 +19,60 @@
         }
         
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
             background: #000;
             color: #fff;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
         
-        /* NAV */
+        /* NAV GLASSMORPHISM */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 1000;
-            padding: 20px 50px;
-            backdrop-filter: blur(30px);
-            background: rgba(0,0,0,0.7);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 18px 60px;
+            backdrop-filter: blur(40px) saturate(180%);
+            background: rgba(0,0,0,0.75);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        nav.scrolled {
+            padding: 12px 60px;
+            background: rgba(0,0,0,0.92);
         }
         
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-weight: 700;
-            font-size: 18px;
+            gap: 14px;
+            font-weight: 800;
+            font-size: 20px;
+            letter-spacing: -0.02em;
         }
         
         .logo img {
-            width: 38px;
-            height: 38px;
-            border-radius: 9px;
+            width: 42px;
+            height: 42px;
+            border-radius: 11px;
+            box-shadow: 0 8px 24px rgba(0,128,128,0.3);
+            transition: all 0.3s;
         }
         
-        /* HERO */
+        .logo:hover img {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        /* HERO CINÉMATIQUE AVEC MOCKUP GÉANT */
         .hero {
-            min-height: 100vh;
+            min-height: 120vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 120px 20px 60px;
+            padding: 140px 40px 80px;
             position: relative;
             overflow: hidden;
         }
@@ -68,363 +81,705 @@
             position: absolute;
             inset: 0;
             background: 
-                radial-gradient(circle at 30% 50%, rgba(0,128,128,0.25), transparent 65%),
-                radial-gradient(circle at 70% 50%, rgba(0,51,102,0.2), transparent 65%);
-            animation: bgFloat 15s ease-in-out infinite;
+                radial-gradient(ellipse 100% 60% at 50% 40%, rgba(0,128,128,0.35), transparent 70%),
+                radial-gradient(ellipse 80% 50% at 20% 60%, rgba(0,51,102,0.25), transparent 65%),
+                radial-gradient(ellipse 80% 50% at 80% 60%, rgba(0,128,128,0.2), transparent 65%);
+            animation: heroGradient 18s ease-in-out infinite;
         }
         
-        @keyframes bgFloat {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.2) rotate(5deg); }
+        @keyframes heroGradient {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+            33% { transform: scale(1.15) rotate(2deg); opacity: 0.9; }
+            66% { transform: scale(1.08) rotate(-2deg); opacity: 0.95; }
         }
         
         .hero-content {
             text-align: center;
             position: relative;
             z-index: 10;
-            max-width: 100%;
+            max-width: 1600px;
             width: 100%;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+            animation: badgeFadeIn 1s ease-out;
+            color: #00d9d9;
+        }
+        
+        @keyframes badgeFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .hero h1 {
-            font-size: clamp(48px, 12vw, 160px);
+            font-size: clamp(56px, 14vw, 180px);
             font-weight: 900;
-            line-height: 0.92;
-            letter-spacing: -0.06em;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 30%, #008080 60%, #003366 90%);
+            line-height: 0.88;
+            letter-spacing: -0.065em;
+            margin-bottom: 28px;
+            background: linear-gradient(140deg, #ffffff 10%, #00d9d9 45%, #0066cc 80%, #ffffff 100%);
+            background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: titleGradient 8s ease-in-out infinite, titleFadeIn 1.2s ease-out 0.2s both;
+        }
+        
+        @keyframes titleGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes titleFadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .hero p {
-            font-size: clamp(18px, 3.5vw, 28px);
-            opacity: 0.85;
-            margin: 0 auto 50px;
-            max-width: 800px;
-            line-height: 1.5;
-            padding: 0 20px;
+            font-size: clamp(19px, 3.8vw, 32px);
+            opacity: 0.88;
+            margin: 0 auto 70px;
+            max-width: 900px;
+            line-height: 1.45;
+            font-weight: 400;
+            animation: subtitleFadeIn 1.2s ease-out 0.4s both;
         }
         
-        /* MOCKUP PRINCIPAL GÉANT ET CENTRÉ */
+        @keyframes subtitleFadeIn {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* MOCKUP PRINCIPAL ULTRA DOMINANT - 70% */
+        .hero-phone-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            perspective: 2000px;
+            animation: phoneFadeIn 1.4s ease-out 0.6s both;
+        }
+        
+        @keyframes phoneFadeIn {
+            from { opacity: 0; transform: scale(0.85) translateY(60px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        
         .hero-phone {
             width: 100%;
-            max-width: 650px;
             height: auto;
-            margin: 60px auto 0;
             display: block;
-            filter: drop-shadow(0 60px 150px rgba(0,128,128,0.6));
-            animation: heroFloat 7s ease-in-out infinite;
+            filter: drop-shadow(0 80px 200px rgba(0,200,200,0.7))
+                    drop-shadow(0 40px 100px rgba(0,100,200,0.5));
+            animation: heroPhone3D 12s ease-in-out infinite;
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         
-        @keyframes heroFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-40px); }
+        @keyframes heroPhone3D {
+            0%, 100% { 
+                transform: translateY(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg); 
+            }
+            25% { 
+                transform: translateY(-50px) rotateX(3deg) rotateY(-2deg) rotateZ(0.5deg); 
+            }
+            50% { 
+                transform: translateY(-35px) rotateX(-2deg) rotateY(3deg) rotateZ(-0.5deg); 
+            }
+            75% { 
+                transform: translateY(-45px) rotateX(2deg) rotateY(-3deg) rotateZ(0.5deg); 
+            }
+        }
+        
+        .hero-phone:hover {
+            transform: scale(1.05) rotateX(5deg) rotateY(-5deg);
+            filter: drop-shadow(0 100px 250px rgba(0,220,220,0.9))
+                    drop-shadow(0 50px 120px rgba(0,120,220,0.7));
+        }
+        
+        /* GLOW ORBITAL AUTOUR DU MOCKUP PRINCIPAL */
+        .hero-phone-container::before,
+        .hero-phone-container::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            animation: orbitalGlow 10s ease-in-out infinite;
+        }
+        
+        .hero-phone-container::before {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0,200,200,0.4), transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .hero-phone-container::after {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0,100,200,0.35), transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -5s;
+        }
+        
+        @keyframes orbitalGlow {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.9; }
         }
         
         .hero-cta {
             display: inline-block;
-            padding: 22px 55px;
-            background: linear-gradient(135deg, #008080, #003366);
-            border-radius: 50px;
-            font-size: 19px;
+            padding: 24px 62px;
+            background: linear-gradient(135deg, #008080 0%, #003366 100%);
+            border-radius: 60px;
+            font-size: 18px;
             font-weight: 700;
-            margin-top: 50px;
-            box-shadow: 0 30px 90px rgba(0,128,128,0.5);
-            transition: all 0.5s;
+            margin-top: 70px;
+            box-shadow: 0 35px 100px rgba(0,128,128,0.6);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
             cursor: pointer;
             border: none;
             color: #fff;
+            position: relative;
+            overflow: hidden;
+            animation: ctaFadeIn 1.2s ease-out 0.8s both;
+        }
+        
+        @keyframes ctaFadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #00d9d9 0%, #0088ff 100%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        .hero-cta:hover::before {
+            opacity: 1;
+        }
+        
+        .hero-cta span {
+            position: relative;
+            z-index: 1;
         }
         
         .hero-cta:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 40px 120px rgba(0,128,128,0.7);
+            transform: translateY(-12px) scale(1.06);
+            box-shadow: 0 50px 150px rgba(0,200,200,0.8);
         }
         
-        /* SHOWCASE SECTIONS */
-        .showcase-section {
-            min-height: 100vh;
+        /* SECTION MOSAÏQUE IMMERSIVE */
+        .mockups-mosaic-section {
+            min-height: 150vh;
+            padding: 120px 40px;
+            position: relative;
             display: flex;
             align-items: center;
-            padding: 100px 30px;
-            position: relative;
+            overflow: hidden;
+            background: 
+                radial-gradient(ellipse 120% 80% at 50% 50%, rgba(0,128,128,0.15), transparent 70%),
+                radial-gradient(ellipse 100% 60% at 20% 30%, rgba(0,51,102,0.12), transparent 60%),
+                radial-gradient(ellipse 100% 60% at 80% 70%, rgba(0,128,128,0.1), transparent 60%),
+                #000;
         }
         
-        .showcase-section:nth-child(even) {
-            background: linear-gradient(180deg, #000 0%, #001a33 50%, #000 100%);
-        }
-        
-        .showcase-container {
-            max-width: 1400px;
+        .mosaic-container {
+            max-width: 1800px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
             width: 100%;
-        }
-        
-        .showcase-section:nth-child(even) .showcase-text {
-            order: 2;
-        }
-        
-        .showcase-text {
-            padding: 0 20px;
-        }
-        
-        .showcase-text h2 {
-            font-size: clamp(40px, 7vw, 90px);
-            font-weight: 900;
-            line-height: 1;
-            letter-spacing: -0.04em;
-            margin-bottom: 28px;
-        }
-        
-        .showcase-text p {
-            font-size: clamp(17px, 2.5vw, 22px);
-            line-height: 1.65;
-            opacity: 0.82;
-            margin-bottom: 18px;
-        }
-        
-        .showcase-visual {
             position: relative;
+        }
+        
+        /* GRILLE MOSAÏQUE CRÉATIVE */
+        .mosaic-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(10, 100px);
+            gap: 40px;
+            position: relative;
+        }
+        
+        /* MOCKUP 1 - GRAND EN HAUT À GAUCHE */
+        .mosaic-item-1 {
+            grid-column: 1 / 6;
+            grid-row: 1 / 6;
+            z-index: 4;
+        }
+        
+        /* MOCKUP 2 - MOYEN EN HAUT À DROITE */
+        .mosaic-item-2 {
+            grid-column: 7 / 11;
+            grid-row: 2 / 6;
+            z-index: 3;
+        }
+        
+        /* MOCKUP 3 - GRAND AU CENTRE-BAS */
+        .mosaic-item-3 {
+            grid-column: 3 / 8;
+            grid-row: 6 / 11;
+            z-index: 5;
+        }
+        
+        /* MOCKUP 4 - MOYEN EN BAS À DROITE */
+        .mosaic-item-4 {
+            grid-column: 9 / 13;
+            grid-row: 7 / 11;
+            z-index: 2;
+        }
+        
+        .mosaic-item {
+            position: relative;
+            opacity: 0;
+            transform: scale(0.85) translateY(80px);
+            transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .mosaic-item.revealed {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+        
+        .phone-showcase {
+            position: relative;
+            perspective: 2000px;
             display: flex;
             justify-content: center;
             align-items: center;
             width: 100%;
+            height: 100%;
         }
         
-        /* MOCKUPS GÉANTS ET CENTRÉS */
-        .showcase-phone {
+        .phone-showcase img {
             width: 100%;
-            max-width: 500px;
-            height: auto;
-            border-radius: 30px;
-            box-shadow: 0 50px 130px rgba(0,128,128,0.4);
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            height: 100%;
+            object-fit: contain;
+            border-radius: 36px;
+            box-shadow: 
+                0 80px 200px rgba(0,180,180,0.7),
+                0 40px 100px rgba(0,80,160,0.6),
+                0 20px 50px rgba(0,50,100,0.4),
+                inset 0 1px 0 rgba(255,255,255,0.15);
+            transition: all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
             display: block;
         }
         
-        .showcase-phone:hover {
-            transform: scale(1.06);
-            box-shadow: 0 70px 180px rgba(0,128,128,0.6);
+        /* ANIMATIONS DIFFÉRENCIÉES PAR MOCKUP */
+        .mosaic-item-1 .phone-showcase img {
+            animation: mockupFloat1 9s ease-in-out infinite;
         }
         
-        .showcase-visual::before {
+        .mosaic-item-2 .phone-showcase img {
+            animation: mockupFloat2 10s ease-in-out infinite 0.5s;
+        }
+        
+        .mosaic-item-3 .phone-showcase img {
+            animation: mockupFloat3 8s ease-in-out infinite 1s;
+        }
+        
+        .mosaic-item-4 .phone-showcase img {
+            animation: mockupFloat4 11s ease-in-out infinite 1.5s;
+        }
+        
+        @keyframes mockupFloat1 {
+            0%, 100% { 
+                transform: translateY(0) rotateY(0deg) rotateX(0deg) rotateZ(0deg); 
+            }
+            33% { 
+                transform: translateY(-25px) rotateY(4deg) rotateX(-3deg) rotateZ(1deg); 
+            }
+            66% { 
+                transform: translateY(-18px) rotateY(-4deg) rotateX(3deg) rotateZ(-1deg); 
+            }
+        }
+        
+        @keyframes mockupFloat2 {
+            0%, 100% { 
+                transform: translateY(0) rotateY(0deg) rotateX(0deg) rotateZ(0deg); 
+            }
+            33% { 
+                transform: translateY(-20px) rotateY(-3deg) rotateX(2deg) rotateZ(-0.5deg); 
+            }
+            66% { 
+                transform: translateY(-28px) rotateY(3deg) rotateX(-2deg) rotateZ(0.5deg); 
+            }
+        }
+        
+        @keyframes mockupFloat3 {
+            0%, 100% { 
+                transform: translateY(0) rotateY(0deg) rotateX(0deg) rotateZ(0deg); 
+            }
+            33% { 
+                transform: translateY(-22px) rotateY(5deg) rotateX(-2deg) rotateZ(0.8deg); 
+            }
+            66% { 
+                transform: translateY(-30px) rotateY(-5deg) rotateX(2deg) rotateZ(-0.8deg); 
+            }
+        }
+        
+        @keyframes mockupFloat4 {
+            0%, 100% { 
+                transform: translateY(0) rotateY(0deg) rotateX(0deg) rotateZ(0deg); 
+            }
+            33% { 
+                transform: translateY(-18px) rotateY(-4deg) rotateX(3deg) rotateZ(-0.6deg); 
+            }
+            66% { 
+                transform: translateY(-24px) rotateY(4deg) rotateX(-3deg) rotateZ(0.6deg); 
+            }
+        }
+        
+        .phone-showcase img:hover {
+            transform: scale(1.15) rotateY(15deg) rotateX(-8deg) rotateZ(2deg) !important;
+            box-shadow: 
+                0 120px 300px rgba(0,240,240,1),
+                0 60px 140px rgba(0,120,200,0.9),
+                0 30px 70px rgba(0,80,160,0.6);
+            filter: brightness(1.15) saturate(1.2);
+            animation: none;
+            z-index: 100;
+        }
+        
+        /* GLOW ARTISTIQUE AUTOUR DES MOCKUPS */
+        .phone-showcase::before {
             content: '';
             position: absolute;
-            inset: -35%;
-            background: radial-gradient(circle, rgba(0,128,128,0.25), transparent 70%);
-            filter: blur(100px);
-            animation: glowPulse 6s ease-in-out infinite;
+            inset: -60%;
+            background: radial-gradient(circle, rgba(0,220,220,0.4), rgba(0,100,200,0.3) 40%, transparent 70%);
+            filter: blur(120px);
             z-index: -1;
+            animation: showcaseGlow 10s ease-in-out infinite;
         }
         
-        @keyframes glowPulse {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 0.85; transform: scale(1.2); }
+        .phone-showcase::after {
+            content: '';
+            position: absolute;
+            inset: -40%;
+            background: radial-gradient(circle, rgba(0,150,255,0.35), transparent 60%);
+            filter: blur(90px);
+            z-index: -1;
+            animation: showcaseGlow 12s ease-in-out infinite reverse;
         }
         
-        /* FEATURES */
+        /* GLOWS DIFFÉRENCIÉS PAR POSITION */
+        .mosaic-item-1 .phone-showcase::before {
+            animation: showcaseGlow1 12s ease-in-out infinite;
+        }
+        
+        .mosaic-item-2 .phone-showcase::before {
+            animation: showcaseGlow2 10s ease-in-out infinite;
+        }
+        
+        .mosaic-item-3 .phone-showcase::before {
+            animation: showcaseGlow3 14s ease-in-out infinite;
+        }
+        
+        .mosaic-item-4 .phone-showcase::before {
+            animation: showcaseGlow4 11s ease-in-out infinite;
+        }
+        
+        @keyframes showcaseGlow1 {
+            0%, 100% { opacity: 0.6; transform: scale(1) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.4) rotate(15deg); }
+        }
+        
+        @keyframes showcaseGlow2 {
+            0%, 100% { opacity: 0.5; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.95; transform: scale(1.3) rotate(-12deg); }
+        }
+        
+        @keyframes showcaseGlow3 {
+            0%, 100% { opacity: 0.65; transform: scale(1) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.5) rotate(18deg); }
+        }
+        
+        @keyframes showcaseGlow4 {
+            0%, 100% { opacity: 0.55; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.9; transform: scale(1.35) rotate(-10deg); }
+        }
+        
+        /* FEATURES SECTION ULTRA MINIMALISTE - TITRE SEUL */
         .features {
-            padding: 120px 30px;
-            background: linear-gradient(180deg, #000, #002244, #000);
+            padding: 180px 40px;
+            background: 
+                linear-gradient(180deg, #000 0%, #001a1a 20%, #002244 50%, #001a1a 80%, #000 100%);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 1200px;
+            height: 1200px;
+            background: radial-gradient(circle, rgba(0,128,128,0.15), transparent 70%);
+            filter: blur(150px);
+            transform: translate(-50%, -50%);
+            animation: featuresBgPulse 12s ease-in-out infinite;
+        }
+        
+        @keyframes featuresBgPulse {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.2); }
         }
         
         .features h2 {
-            font-size: clamp(48px, 9vw, 100px);
+            font-size: clamp(54px, 10vw, 120px);
             font-weight: 900;
-            letter-spacing: -0.04em;
-            margin-bottom: 80px;
+            letter-spacing: -0.05em;
             line-height: 1.05;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, #ffffff 10%, #00d9d9 50%, #0066cc 90%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
-        .features-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 32px;
-        }
-        
-        .feature {
-            padding: 45px 30px;
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 28px;
-            transition: all 0.4s;
-            text-align: center;
-        }
-        
-        .feature:hover {
-            transform: translateY(-12px);
-            background: rgba(255,255,255,0.06);
-            border-color: #008080;
-            box-shadow: 0 30px 80px rgba(0,128,128,0.3);
-        }
-        
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .feature-icon svg {
-            width: 100%;
-            height: 100%;
-            stroke: #008080;
-            fill: none;
-            stroke-width: 1.5;
-        }
-        
-        .feature h3 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        
-        .feature p {
-            font-size: 15px;
-            opacity: 0.75;
-            line-height: 1.6;
-        }
-        
-        /* CTA FINALE */
+        /* CTA FINALE EXPLOSIVE */
         .final-cta {
-            padding: 150px 30px;
+            padding: 180px 40px;
             text-align: center;
             background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 1000px;
+            height: 1000px;
+            background: radial-gradient(circle, rgba(0,128,128,0.25), transparent 70%);
+            filter: blur(140px);
+            transform: translate(-50%, -50%);
+            animation: ctaBgPulse 10s ease-in-out infinite;
+        }
+        
+        @keyframes ctaBgPulse {
+            0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.3); }
         }
         
         .final-cta h2 {
-            font-size: clamp(42px, 9vw, 100px);
+            font-size: clamp(48px, 10vw, 120px);
             font-weight: 900;
-            letter-spacing: -0.04em;
-            margin-bottom: 24px;
+            letter-spacing: -0.05em;
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, #ffffff 20%, #00d9d9 60%, #0066cc 90%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .final-cta p {
-            font-size: clamp(18px, 3.5vw, 24px);
-            opacity: 0.82;
-            margin-bottom: 45px;
+            font-size: clamp(19px, 3.8vw, 28px);
+            opacity: 0.84;
+            margin-bottom: 55px;
+            position: relative;
+            z-index: 1;
         }
         
         .final-cta button {
-            padding: 24px 65px;
-            background: linear-gradient(135deg, #008080, #003366);
+            padding: 26px 70px;
+            background: linear-gradient(135deg, #008080 0%, #003366 100%);
             border: none;
-            border-radius: 50px;
+            border-radius: 60px;
             font-size: 19px;
             font-weight: 700;
             color: #fff;
             cursor: pointer;
-            box-shadow: 0 30px 80px rgba(0,128,128,0.5);
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 40px 100px rgba(0,128,128,0.6);
+            transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .final-cta button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #00d9d9 0%, #0088ff 100%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        .final-cta button:hover::before {
+            opacity: 1;
+        }
+        
+        .final-cta button span {
+            position: relative;
+            z-index: 1;
         }
         
         .final-cta button:hover {
-            transform: translateY(-10px) scale(1.06);
-            box-shadow: 0 50px 140px rgba(0,128,128,0.8);
+            transform: translateY(-14px) scale(1.08);
+            box-shadow: 0 60px 160px rgba(0,200,200,0.9);
         }
         
         /* FOOTER */
         footer {
-            padding: 50px 30px;
+            padding: 60px 40px;
             text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            background: #000;
         }
         
         footer p {
-            opacity: 0.4;
+            opacity: 0.45;
             font-size: 14px;
-            margin: 5px 0;
+            margin: 6px 0;
         }
         
-        /* RESPONSIVE */
-        @media (max-width: 1024px) {
-            .showcase-container {
-                grid-template-columns: 1fr;
-                gap: 50px;
+        /* RESPONSIVE ULTRA SOIGNÉ */
+        @media (max-width: 1400px) {
+            .mosaic-grid {
+                grid-template-columns: repeat(8, 1fr);
+                grid-template-rows: repeat(12, 80px);
+                gap: 30px;
             }
             
-            .showcase-section:nth-child(even) .showcase-text {
-                order: 1;
+            .mosaic-item-1 {
+                grid-column: 1 / 5;
+                grid-row: 1 / 5;
             }
             
-            .showcase-section {
-                padding: 80px 25px;
-                min-height: auto;
+            .mosaic-item-2 {
+                grid-column: 5 / 9;
+                grid-row: 1 / 5;
             }
             
-            .showcase-phone {
-                max-width: 420px;
+            .mosaic-item-3 {
+                grid-column: 1 / 5;
+                grid-row: 6 / 10;
+            }
+            
+            .mosaic-item-4 {
+                grid-column: 5 / 9;
+                grid-row: 6 / 10;
+            }
+        }
+        
+        @media (max-width: 1200px) {
+            .mosaic-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 80px;
+            }
+            
+            .mosaic-item {
+                width: 100%;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            
+            .phone-showcase {
+                height: auto;
             }
         }
         
         @media (max-width: 768px) {
             nav {
-                padding: 16px 20px;
+                padding: 14px 24px;
             }
             
             .hero {
-                padding: 100px 15px 50px;
+                padding: 120px 20px 60px;
+                min-height: 100vh;
             }
             
-            .hero-phone {
-                max-width: 480px;
+            .hero-phone-container {
+                max-width: 90%;
             }
             
             .hero-cta {
-                padding: 18px 45px;
-                font-size: 17px;
+                padding: 20px 50px;
+                font-size: 16px;
+                margin-top: 50px;
             }
             
-            .showcase-section {
-                padding: 60px 20px;
+            .immersive-section {
+                padding: 80px 20px;
             }
             
-            .showcase-phone {
-                max-width: 380px;
+            .phone-showcase img {
+                max-width: 90%;
             }
             
             .features {
-                padding: 90px 20px;
+                padding: 100px 20px;
             }
             
             .final-cta {
-                padding: 110px 20px;
+                padding: 120px 20px;
+            }
+            
+            .final-cta button {
+                padding: 22px 55px;
+                font-size: 17px;
             }
         }
         
         @media (max-width: 480px) {
             .logo {
-                font-size: 16px;
+                font-size: 17px;
             }
             
             .logo img {
-                width: 32px;
-                height: 32px;
+                width: 36px;
+                height: 36px;
             }
             
-            .hero-phone {
-                max-width: 95%;
+            .hero-badge {
+                font-size: 11px;
+                padding: 8px 18px;
             }
-            
-            .showcase-phone {
-                max-width: 95%;
-            }
+        }
+        
+        /* ANIMATIONS SCROLL BASÉES SUR INTERSECTION OBSERVER */
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .reveal-element.revealed {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <nav>
+    <nav id="navbar">
         <div class="logo">
             <img src="./images/logoi-collect.png" alt="i-collect">
             <span>i-collect</span>
@@ -436,118 +791,54 @@
         <div class="hero-content">
             <h1>Redessinons<br>Dakar</h1>
             <p>L'application qui transforme chaque trajet en contribution pour une ville meilleure</p>
-            <img src="./images/mockupprincipal.png" alt="i-collect" class="hero-phone">
+            <div class="hero-phone-container">
+                <img src="./images/mockupprincipal.png" alt="i-collect App" class="hero-phone">
+            </div>
             <button class="hero-cta" onclick="window.open('https://apps.apple.com/app/i-collect/id6754554865')">
-                Télécharger sur l'App Store
+                <span>Télécharger sur l'App Store</span>
             </button>
         </div>
     </section>
     
-    <section class="showcase-section">
-        <div class="showcase-container">
-            <div class="showcase-text">
-                <h2>Carte<br>interactive</h2>
-                <p>Visualisez en temps réel tous les arrêts recensés.</p>
-                <p>Navigation fluide. Zoom précis. Performance instantanée.</p>
-            </div>
-            <div class="showcase-visual">
-                <img src="./images/mockup1.png" alt="Carte" class="showcase-phone">
-            </div>
-        </div>
-    </section>
-    
-    <section class="showcase-section">
-        <div class="showcase-container">
-            <div class="showcase-text">
-                <h2>Sélection<br>intuitive</h2>
-                <p>Choisissez votre compagnie et ligne en un geste.</p>
-                <p>DDD, BRT, TER, Tata. Interface épurée.</p>
-            </div>
-            <div class="showcase-visual">
-                <img src="./images/mockup2.png" alt="Sélection" class="showcase-phone">
-            </div>
-        </div>
-    </section>
-    
-    <section class="showcase-section">
-        <div class="showcase-container">
-            <div class="showcase-text">
-                <h2>Information<br>détaillée</h2>
-                <p>Consultez toutes les informations d'un arrêt.</p>
-                <p>Coordonnées GPS. Horodatage. Transparence totale.</p>
-            </div>
-            <div class="showcase-visual">
-                <img src="./images/mockup3.png" alt="Information" class="showcase-phone">
-            </div>
-        </div>
-    </section>
-    
-    <section class="showcase-section">
-        <div class="showcase-container">
-            <div class="showcase-text">
-                <h2>Historique<br>complet</h2>
-                <p>Retrouvez toutes vos contributions.</p>
-                <p>Liste organisée. Données locales. Votre impact visible.</p>
-            </div>
-            <div class="showcase-visual">
-                <img src="./images/mockup4.png" alt="Historique" class="showcase-phone">
+    <section class="mockups-mosaic-section">
+        <div class="mosaic-container">
+            <div class="mosaic-grid">
+                <div class="mosaic-item mosaic-item-1">
+                    <div class="phone-showcase">
+                        <img src="./images/mockup1.png" alt="i-collect mockup 1">
+                    </div>
+                </div>
+                
+                <div class="mosaic-item mosaic-item-2">
+                    <div class="phone-showcase">
+                        <img src="./images/mockup2.png" alt="i-collect mockup 2">
+                    </div>
+                </div>
+                
+                <div class="mosaic-item mosaic-item-3">
+                    <div class="phone-showcase">
+                        <img src="./images/mockup3.png" alt="i-collect mockup 3">
+                    </div>
+                </div>
+                
+                <div class="mosaic-item mosaic-item-4">
+                    <div class="phone-showcase">
+                        <img src="./images/mockup4.png" alt="i-collect mockup 4">
+                    </div>
+                </div>
             </div>
         </div>
     </section>
     
     <section class="features">
-        <h2>Simple.<br>Puissant.<br>Gratuit.</h2>
-        <div class="features-grid">
-            <div class="feature">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
-                </div>
-                <h3>Géolocalisé</h3>
-                <p>Position GPS automatique en un tap</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 6V4M17 6V4M12 10v4M10 12h4"/></svg>
-                </div>
-                <h3>4 compagnies</h3>
-                <p>Tous les transports publics couverts</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                </div>
-                <h3>Instantané</h3>
-                <p>Zéro inscription. Zéro friction.</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2v10l5.5 3.5"/></svg>
-                </div>
-                <h3>Open Source</h3>
-                <p>Données libres et accessibles à tous</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/><path d="M9 12l2 2 4-4"/></svg>
-                </div>
-                <h3>Gratuit</h3>
-                <p>Aucune publicité. Aucun abonnement.</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="16" r="1"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-                </div>
-                <h3>Privé</h3>
-                <p>Vos données vous appartiennent</p>
-            </div>
-        </div>
+        <h2 class="reveal-element">Simple.<br>Puissant.<br>Gratuit.</h2>
     </section>
     
     <section class="final-cta">
         <h2>Prêt à contribuer ?</h2>
         <p>Rejoignez le mouvement. Téléchargement gratuit.</p>
         <button onclick="window.open('https://apps.apple.com/app/i-collect/id6754554865')">
-            Télécharger maintenant
+            <span>Télécharger maintenant</span>
         </button>
     </section>
     
@@ -555,5 +846,65 @@
         <p>© 2024 i-collect — Dakar, Sénégal</p>
         <p>Art'Beau-Rescence • Ecosystem i</p>
     </footer>
+    
+    <script>
+        // NAV SCROLL EFFECT
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // INTERSECTION OBSERVER POUR RÉVÉLATIONS PROGRESSIVES
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('revealed');
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+        
+        // OBSERVER TOUS LES ÉLÉMENTS AVEC LA CLASSE reveal-element
+        document.querySelectorAll('.reveal-element').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // OBSERVER MOSAIC ITEMS
+        document.querySelectorAll('.mosaic-item').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // PARALLAX LÉGER SUR SCROLL POUR LES MOCKUPS - DÉSACTIVÉ POUR ÉVITER CONFLITS
+        // let ticking = false;
+        // 
+        // window.addEventListener('scroll', () => {
+        //     if (!ticking) {
+        //         window.requestAnimationFrame(() => {
+        //             const scrolled = window.pageYOffset;
+        //             const phones = document.querySelectorAll('.phone-showcase img');
+        //             
+        //             phones.forEach((phone, index) => {
+        //                 const speed = 0.3 + (index * 0.1);
+        //                 const yPos = -(scrolled * speed);
+        //                 phone.style.transform = `translateY(${yPos}px)`;
+        //             });
+        //             
+        //             ticking = false;
+        //         });
+        //         
+        //         ticking = true;
+        //     }
+        // });
+    </script>
 </body>
 </html>

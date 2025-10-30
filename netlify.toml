@@ -1,7 +1,2 @@
 [build]
   publish = "."
-
-[[redirects]]
-  from = "/"
-  to = "/index-ultimate.html"
-  status = 200
