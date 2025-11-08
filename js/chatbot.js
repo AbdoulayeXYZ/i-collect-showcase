@@ -5,7 +5,7 @@
 
 class iChatbot {
     constructor() {
-        this.apiUrl = 'http://localhost:3002/api/chat'; // URL de l'API i-chatbot
+        this.apiUrl = 'https://i-chatbot-8txffsy2w-abdoulaye-niasses-projects.vercel.app/api/chat'; // URL de l'API i-chatbot
         this.messages = [];
         this.isOpen = false;
         this.isTyping = false;
