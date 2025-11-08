@@ -5,7 +5,7 @@
 
 class iChatbot {
     constructor() {
-        this.apiUrl = 'https://i-chatbot-8txffsy2w-abdoulaye-niasses-projects.vercel.app/api/chat'; // URL de l'API i-chatbot
+        this.apiUrl = 'https://i-chatbot-3qu87pn3s-abdoulaye-niasses-projects.vercel.app/api/simple-chat'; // URL de l'API i-chatbot
         this.messages = [];
         this.isOpen = false;
         this.isTyping = false;
@@ -35,10 +35,12 @@ class iChatbot {
                 <div class="chatbot-window" id="chatbotWindow">
                     <!-- Header -->
                     <div class="chatbot-header">
-                        <div class="chatbot-header-left">
-                            <div class="chatbot-avatar">🤖</div>
+                    <div class="chatbot-header-left">
+                            <div class="chatbot-avatar">
+                                <img src="images/logoecosystem i.png" alt="i-chatbot" />
+                            </div>
                             <div class="chatbot-info">
-                                <h3>Assistant i</h3>
+                                <h3>i-chatbot</h3>
                                 <div class="chatbot-status">
                                     <span class="status-dot"></span>
                                     En ligne
@@ -148,9 +150,13 @@ class iChatbot {
         const messagesContainer = document.getElementById('chatbotMessages');
         const messageTime = time || this.getTime();
         
+        const avatarHTML = type === 'bot' 
+            ? '<img src="images/logoecosystem i.png" alt="i-chatbot" />'
+            : '👤';
+        
         const messageHTML = `
             <div class="message ${type}">
-                <div class="message-avatar">${type === 'bot' ? '🤖' : '👤'}</div>
+                <div class="message-avatar">${avatarHTML}</div>
                 <div class="message-content">
                     <div class="message-bubble">${text}</div>
                     <div class="message-time">${messageTime}</div>
@@ -168,7 +174,9 @@ class iChatbot {
         const messagesContainer = document.getElementById('chatbotMessages');
         const typingHTML = `
             <div class="message bot" id="typingIndicator">
-                <div class="message-avatar">🤖</div>
+                <div class="message-avatar">
+                    <img src="images/logoecosystem i.png" alt="i-chatbot" />
+                </div>
                 <div class="message-content">
                     <div class="typing-indicator active">
                         <div class="typing-dot"></div>
