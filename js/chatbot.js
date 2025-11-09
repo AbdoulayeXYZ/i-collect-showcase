@@ -5,7 +5,7 @@
 
 class iChatbot {
     constructor() {
-        this.apiUrl = 'https://i-chatbot-4nw3qqq5u-abdoulaye-niasses-projects.vercel.app/api/chat-rag'; // URL de l'API i-chatbot avec RAG
+        this.apiUrl = 'https://i-chatbot-c7buy25ih-abdoulaye-niasses-projects.vercel.app/api/chat-rag'; // URL de l'API i-chatbot avec RAG
         this.messages = [];
         this.isOpen = false;
         this.isTyping = false;
@@ -151,20 +151,23 @@ class iChatbot {
         // Gras **texte**
         text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
         
-        // Listes avec tirets
-        text = text.replace(/^- (.+)$/gm, '<li>$1</li>');
-        text = text.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+        // Listes avec tirets (-) ou astérisques (*)
+        text = text.replace(/^[*-] (.+)$/gm, '<li>$1</li>');
+        
+        // Wrapper les listes consécutives
+        text = text.replace(/(<li>.*?<\/li>\s*)+/gs, '<ul>$&</ul>');
         
         // Listes numérotées
         text = text.replace(/^(\d+)\. (.+)$/gm, '<li>$2</li>');
         
         // Paragraphes (double saut de ligne)
         text = text.split('\n\n').map(para => {
+            const trimmed = para.trim();
             // Ne pas wrapper les listes
-            if (para.trim().startsWith('<ul>') || para.trim().startsWith('<li>')) {
-                return para;
+            if (trimmed.startsWith('<ul>') || trimmed.startsWith('<li>')) {
+                return trimmed;
             }
-            return para.trim() ? `<p>${para.trim()}</p>` : '';
+            return trimmed ? `<p>${trimmed}</p>` : '';
         }).join('');
         
         // Sauts de ligne simples en <br>
