@@ -5,7 +5,7 @@
 
 class iChatbot {
     constructor() {
-        this.apiUrl = 'https://i-chatbot-fnthxy5fq-abdoulaye-niasses-projects.vercel.app/api/chat-rag'; // URL de l'API i-chatbot avec RAG
+        this.apiUrl = 'https://i-chatbot-4nw3qqq5u-abdoulaye-niasses-projects.vercel.app/api/chat-rag'; // URL de l'API i-chatbot avec RAG
         this.messages = [];
         this.isOpen = false;
         this.isTyping = false;
@@ -146,6 +146,33 @@ class iChatbot {
         this.addMessage('bot', welcomeText);
     }
 
+    // Formater le markdown simple
+    formatMarkdown(text) {
+        // Gras **texte**
+        text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        
+        // Listes avec tirets
+        text = text.replace(/^- (.+)$/gm, '<li>$1</li>');
+        text = text.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+        
+        // Listes numérotées
+        text = text.replace(/^(\d+)\. (.+)$/gm, '<li>$2</li>');
+        
+        // Paragraphes (double saut de ligne)
+        text = text.split('\n\n').map(para => {
+            // Ne pas wrapper les listes
+            if (para.trim().startsWith('<ul>') || para.trim().startsWith('<li>')) {
+                return para;
+            }
+            return para.trim() ? `<p>${para.trim()}</p>` : '';
+        }).join('');
+        
+        // Sauts de ligne simples en <br>
+        text = text.replace(/\n/g, '<br>');
+        
+        return text;
+    }
+    
     addMessage(type, text, time = null) {
         const messagesContainer = document.getElementById('chatbotMessages');
         const messageTime = time || this.getTime();
@@ -154,11 +181,14 @@ class iChatbot {
             ? '<img src="images/logoecosystem i.png" alt="i-chatbot" />'
             : '👤';
         
+        // Formater le texte si c'est un message du bot
+        const formattedText = type === 'bot' ? this.formatMarkdown(text) : text;
+        
         const messageHTML = `
             <div class="message ${type}">
                 <div class="message-avatar">${avatarHTML}</div>
                 <div class="message-content">
-                    <div class="message-bubble">${text}</div>
+                    <div class="message-bubble">${formattedText}</div>
                     <div class="message-time">${messageTime}</div>
                 </div>
             </div>
