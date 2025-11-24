@@ -59,12 +59,12 @@ python3 -m http.server 8000
 npx serve .
 
 # Option 3: PHP
-php -S localhost:8000
+php -S 192.168.1.19:8000
 ```
 
 3. Ouvrir dans le navigateur
 ```
-http://localhost:8000
+http://192.168.1.19:8000
 ```
 
 **Ou simplement ouvrir `index.html` directement dans un navigateur.**

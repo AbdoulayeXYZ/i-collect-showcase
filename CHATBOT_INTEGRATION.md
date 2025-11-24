@@ -48,7 +48,7 @@ cd ../i-chatbot
 node src/server.js > server.log 2>&1 &
 ```
 
-Le serveur démarre sur `http://localhost:3002`
+Le serveur démarre sur `http://192.168.1.19:3002`
 
 ### 2. Ouvrir i-collect-showcase
 
@@ -62,7 +62,7 @@ python3 -m http.server 8080
 
 ### 3. Tester le chatbot
 
-1. Ouvrez http://localhost:8080 dans votre navigateur
+1. Ouvrez http://192.168.1.19:8080 dans votre navigateur
 2. Cliquez sur le bouton flottant bleu en bas à droite
 3. Le chatbot s'ouvre avec un message de bienvenue
 4. Posez une question, par exemple :
@@ -95,7 +95,7 @@ Dans `js/chatbot.js`, modifiez :
 Dans `js/chatbot.js` :
 
 ```javascript
-this.apiUrl = 'http://localhost:3002/api/chat';
+this.apiUrl = 'http://192.168.1.19:3002/api/chat';
 // En production : 'https://votre-domaine.com/api/chat'
 ```
 
@@ -168,7 +168,7 @@ lsof -ti:3002 | xargs kill -9
 Consultez les stats du chatbot :
 
 ```bash
-curl http://localhost:3002/api/stats
+curl http://192.168.1.19:3002/api/stats
 ```
 
 Réponse :
@@ -204,7 +204,7 @@ Réponse :
 
 1. Vérifiez que le serveur tourne :
    ```bash
-   curl http://localhost:3002/health
+   curl http://192.168.1.19:3002/health
    ```
 
 2. Si erreur, redémarrez :
